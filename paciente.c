@@ -23,7 +23,13 @@ PACIENTE *Paciente_Criar(int id, char *nome){
     return NULL;
 }
 
-//Libera a memoria de todas as informacoes do paciente
+//Retorna o historico do paciente
+HISTORICO *Paciente_GetHistorico(PACIENTE *paciente){
+    return paciente->historico;
+}
+
+
+//Libera a memoria de todas as informacoes do paciente, inclusive o historico
 void Paciente_Free(PACIENTE **paciente){
     if(paciente != NULL){
         Historico_Free(&((*paciente)->historico));
@@ -33,9 +39,6 @@ void Paciente_Free(PACIENTE **paciente){
     }
 }
 
-
-
-//Teste -------------------------------------------
 int Paciente_GetID(PACIENTE *paciente){
     if(paciente != NULL){
         return paciente->id;

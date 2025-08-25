@@ -41,7 +41,7 @@ void Historico_Free(HISTORICO **historico){
 }
 
 //Printa o historico medico inteiro
-void Historico_Mostrar(HISTORICO *historico){
+void Historico_Printar(HISTORICO *historico){
     if(historico != NULL){
         for(int i = 0; i < historico->tamanho; i++){
             printf("%d. %s\n", i + 1, historico->procedimentos[i]);
@@ -51,7 +51,7 @@ void Historico_Mostrar(HISTORICO *historico){
 
 //Insere um procedimento ao historico
 bool Historico_InserirProcedimento(HISTORICO *historico, char *procedimento){
-    if(!Historico_EstaCheio(historico)){
+    if(!Historico_EstaCheio(historico) && (historico->quantidadeCaracteres + strlen(procedimento)) <= 100){
         historico->quantidadeCaracteres += strlen(procedimento);
 
         //Insere o procedimento

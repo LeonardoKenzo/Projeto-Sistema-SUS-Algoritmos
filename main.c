@@ -3,9 +3,14 @@
 #include "paciente.h"
 
 void PrintarMenu();
+void MostrarHistorico(PACIENTE *paciente); //Mudar depois o parametro de PACIENTE * para int id
 
 int main(void){
     int comando;
+    //TESTE 
+    PACIENTE *testePaciente = Paciente_Criar(1, "Carlos");
+    Historico_InserirProcedimento(Paciente_GetHistorico(testePaciente), "Testando funcionalidade");
+    //TESTE
     do{
         PrintarMenu();
         scanf(" %d", &comando);
@@ -24,12 +29,14 @@ int main(void){
         case 6:
             break;
         case 7:
+            Historico_Printar(Paciente_GetHistorico(testePaciente));
             break;
         }
         
     }while(comando != 8);
 
     //LIBERAR MEMORIA
+    Paciente_Free(&testePaciente);
 
     return 0;
 }
