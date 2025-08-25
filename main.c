@@ -3,14 +3,34 @@
 #include "paciente.h"
 
 void PrintarMenu();
-void MostrarHistorico(PACIENTE *paciente); //Mudar depois o parametro de PACIENTE * para int id
+void ProcessarComandos();
 
 int main(void){
-    int comando;
     //TESTE 
     PACIENTE *testePaciente = Paciente_Criar(1, "Carlos");
     Historico_InserirProcedimento(Paciente_GetHistorico(testePaciente), "Testando funcionalidade");
-    //TESTE
+    ProcessarComandos();
+
+    //LIBERAR MEMORIA
+    Paciente_Free(&testePaciente);
+
+    return 0;
+}
+
+void PrintarMenu(){
+    printf("Selecione o Comando:\n");
+    printf("1. Registrar paciente.\n");
+    printf("2. Dar alta no paciente.\n");
+    printf("3. Adicionar procedimento ao histórico médico.\n");
+    printf("4. Desfazer procedimento do histórico médico.\n");
+    printf("5. Chamar paciente para atendimento.\n");
+    printf("6. Mostrar fila de espera.\n");
+    printf("7. Mostrar histórico do paciente.\n");
+    printf("8. Sair.\n");
+}
+
+void ProcessarComandos(){
+    int comando;
     do{
         PrintarMenu();
         scanf(" %d", &comando);
@@ -32,23 +52,7 @@ int main(void){
             Historico_Printar(Paciente_GetHistorico(testePaciente));
             break;
         }
-        
     }while(comando != 8);
 
-    //LIBERAR MEMORIA
-    Paciente_Free(&testePaciente);
-
-    return 0;
-}
-
-void PrintarMenu(){
-    printf("Selecione o Comando:\n");
-    printf("1. Registrar paciente.\n");
-    printf("2. Dar alta no paciente.\n");
-    printf("3. Adicionar procedimento ao histórico médico.\n");
-    printf("4. Desfazer procedimento do histórico médico.\n");
-    printf("5. Chamar paciente para atendimento.\n");
-    printf("6. Mostrar fila de espera.\n");
-    printf("7. Mostrar histórico do paciente.\n");
-    printf("8. Sair.\n");
+    return;
 }
