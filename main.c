@@ -30,6 +30,7 @@ void PrintarMenu(){
 }
 
 void ProcessarComandos(){
+    PrintarMenu();
     int comando;
     do{
         PrintarMenu();
@@ -49,7 +50,7 @@ void ProcessarComandos(){
         case 6:
             break;
         case 7:
-            Historico_Printar(Paciente_GetHistorico(testePaciente));
+            Historico_Printar(Paciente_GetHistorico());
             break;
         }
     }while(comando != 8);
