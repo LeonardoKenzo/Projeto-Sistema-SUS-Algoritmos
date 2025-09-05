@@ -67,7 +67,7 @@ void Relacao_Free(Relacao_De_Pacientes **relacao){
         return;
     }else{
         for (int i = 0; i < (*relacao)->quantidade; i++){
-            PacienteFree((*relacao)->pacientes[i]);
+            Paciente_Free(&((*relacao)->pacientes[i]));
         }
         free((*relacao)->pacientes);
         (*relacao)->capacidade = 0;
@@ -95,7 +95,7 @@ void Relacao_Listar_Pacientes(Relacao_De_Pacientes **relacao){
 
         for (int i = 0; i < (*relacao)->quantidade; i++){        
             PACIENTE *p = (*relacao)->pacientes[i];
-            int id = Paciente_GetId(p);
+            int id = Paciente_GetID(p);
             char *nome = Paciente_GetNome(p);
 
             printf("%-10d | %-30s\n", id, nome);
@@ -149,7 +149,7 @@ bool Relacao_InserirPaciente(Relacao_De_Pacientes **relacao, PACIENTE *paciente)
     }
     (*relacao)->pacientes[indice_insercao] = paciente;
     (*relacao)->quantidade += 1;
-    
+
     return true;
 }
     
