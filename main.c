@@ -50,7 +50,7 @@ void ProcessarComandos(){
         case 6:
             break;
         case 7:
-            Historico_Printar(Paciente_GetHistorico());
+           
             break;
         }
     }while(comando != 8);
