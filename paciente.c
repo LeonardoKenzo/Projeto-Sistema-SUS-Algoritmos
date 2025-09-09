@@ -6,6 +6,7 @@ struct paciente_{
     int id;
     char *nome;
     HISTORICO *historico;
+    bool em_atendimento;
 };
 
 //Cria um paciente com id, nome e historico proprio
