@@ -18,6 +18,7 @@ PACIENTE *paciente_criar(int id, char *nome){
         paciente->id = id;
         paciente->nome = strdup(nome);
         paciente->historico = historico_criar();
+        paciente->em_atendimento = false;
 
         return paciente;
     }
@@ -28,7 +29,6 @@ PACIENTE *paciente_criar(int id, char *nome){
 HISTORICO *paciente_get_historico(PACIENTE *paciente){
     return paciente->historico;
 }
-
 
 //Libera a memoria de todas as informacoes do paciente, inclusive o historico
 void paciente_free(PACIENTE **paciente){

@@ -4,14 +4,14 @@
     #include "paciente.h"
     #include "historico.h"
 
-    typedef struct relacao_de_pacientes_ Relacao_De_Pacientes;
+    typedef struct relacao_de_pacientes_ RELACAO_DE_PACIENTE;
 
-    Relacao_De_Pacientes *relacao_criar();
-    void relacao_free(Relacao_De_Pacientes **relacao);
-    void relacao_listar_pacientes(Relacao_De_Pacientes **relacao);
-    bool relacao_esta_vazia(Relacao_De_Pacientes **relacao);
-    PACIENTE *registro_busca(Relacao_De_Pacientes **relacao, int id);
-    bool relacao_apagar_paciente(Relacao_De_Pacientes **relacao, int id);
-    bool relacao_inserir_paciente(Relacao_De_Pacientes **relacao, PACIENTE *paciente);
+    RELACAO_DE_PACIENTE *relacao_criar();
+    void relacao_free(RELACAO_DE_PACIENTE **relacao);
+    void relacao_listar_pacientes(RELACAO_DE_PACIENTE *relacao);
+    bool relacao_esta_vazia(RELACAO_DE_PACIENTE *relacao);
+    PACIENTE *registro_busca(RELACAO_DE_PACIENTE *relacao, int id);
+    bool relacao_apagar_paciente(RELACAO_DE_PACIENTE *relacao, int id);
+    bool relacao_inserir_paciente(RELACAO_DE_PACIENTE *relacao, PACIENTE *paciente);
 
 #endif
