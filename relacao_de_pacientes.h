@@ -6,12 +6,12 @@
 
     typedef struct relacao_de_pacientes_ Relacao_De_Pacientes;
 
-    Relacao_De_Pacientes *Relacao_Criar();
-    void Relacao_Free(Relacao_De_Pacientes **relacao);
-    void Relacao_Listar_Pacientes(Relacao_De_Pacientes **relacao);
-    bool Relacao_EstaVazia(Relacao_De_Pacientes **relacao);
-    PACIENTE *Registro_Busca(Relacao_De_Pacientes **relacao, int id);
-    bool Relacao_ApagarPaciente(Relacao_De_Pacientes **relacao, int id);
-    bool Relacao_InserirPaciente(Relacao_De_Pacientes **relacao, PACIENTE *paciente);
+    Relacao_De_Pacientes *relacao_criar();
+    void relacao_free(Relacao_De_Pacientes **relacao);
+    void relacao_listar_pacientes(Relacao_De_Pacientes **relacao);
+    bool relacao_esta_vazia(Relacao_De_Pacientes **relacao);
+    PACIENTE *registro_busca(Relacao_De_Pacientes **relacao, int id);
+    bool relacao_apagar_paciente(Relacao_De_Pacientes **relacao, int id);
+    bool relacao_inserir_paciente(Relacao_De_Pacientes **relacao, PACIENTE *paciente);
 
 #endif

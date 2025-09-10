@@ -2,13 +2,13 @@
     #define FILA_DE_ATENDIMENTO_H
     #include "paciente.h"
 
-    typedef struct fila_de_atendimento_ Fila_De_Atendimento;
+    typedef struct fila_de_atendimento_ fila_de_atendimento;
 
-    Fila_De_Atendimento *Fila_Criar(int capacidade);
-    bool Fila_Inserir(Fila_De_Atendimento *fila, PACIENTE *paciente);
-    PACIENTE *Fila_Remover(Fila_De_Atendimento *fila);
-    void Fila_Liberar(Fila_De_Atendimento **fila);
-    bool Fila_Cheia(Fila_De_Atendimento *fila);
-    bool Fila_Vazia(Fila_De_Atendimento *fila);
+    fila_de_atendimento *fila_criar(int capacidade);
+    bool fila_inserir(fila_de_atendimento *fila, PACIENTE *paciente);
+    PACIENTE *fila_remover(fila_de_atendimento *fila);
+    void fila_liberar(fila_de_atendimento **fila);
+    bool fila_cheia(fila_de_atendimento *fila);
+    bool fila_vazia(fila_de_atendimento *fila);
 
 #endif

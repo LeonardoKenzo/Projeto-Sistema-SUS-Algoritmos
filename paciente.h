@@ -3,10 +3,10 @@
     #include "historico.h"
     
     typedef struct paciente_ PACIENTE;
-    PACIENTE *Paciente_Criar(int id, char *nome);
-    HISTORICO *Paciente_GetHistorico(PACIENTE *paciente);
-    void Paciente_Free(PACIENTE **paciente); //Essa funcao da free tambem no historico relacionado a ele
-    int Paciente_GetID(PACIENTE *paciente);
-    char *Paciente_GetNome(PACIENTE *paciente);
+    PACIENTE *paciente_criar(int id, char *nome);
+    HISTORICO *paciente_get_historico(PACIENTE *paciente);
+    void paciente_free(PACIENTE **paciente); //Essa funcao da free tambem no historico relacionado a ele
+    int paciente_get_id(PACIENTE *paciente);
+    char *paciente_get_nome(PACIENTE *paciente);
 
 #endif

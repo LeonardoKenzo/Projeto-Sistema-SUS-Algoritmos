@@ -11,11 +11,11 @@ struct fila_de_atendimento_
     int capacidade;
     int inicio;
     int fim;
-    Fila_De_Atendimento* proximo;
+    fila_de_atendimento* proximo;
 };
 
-Fila_De_Atendimento *Fila_Criar(int capacidade){
-    Fila_De_Atendimento *fila = (Fila_De_Atendimento *)malloc(sizeof(Fila_De_Atendimento));
+fila_de_atendimento *Fila_Criar(int capacidade){
+    fila_de_atendimento *fila = (fila_de_atendimento *)malloc(sizeof(fila_de_atendimento));
     if (fila == NULL) {
         return NULL;
     }
@@ -31,22 +31,22 @@ Fila_De_Atendimento *Fila_Criar(int capacidade){
     return fila;
 }
 
-bool Fila_Vazia(Fila_De_Atendimento *fila) {
+bool fila_vazia(fila_de_atendimento *fila) {
     if (fila == NULL) {
         return true;
     }
     return fila->inicio == fila->fim;
 }
 
-bool Fila_Cheia(Fila_De_Atendimento *fila) {
+bool fila_cheia(fila_de_atendimento *fila) {
     if (fila == NULL) {
         return false;
     }
     return (fila->fim + 1) % fila->capacidade == fila->inicio;
 }
 
-bool Fila_Inserir(Fila_De_Atendimento *fila, PACIENTE *paciente) {
-    if ((fila == NULL && !Fila_Cheia(fila)) || paciente == NULL) {
+bool fila_inserir(fila_de_atendimento *fila, PACIENTE *paciente) {
+    if ((fila == NULL && !fila_cheia(fila)) || paciente == NULL) {
         return false;
     }
 
@@ -56,7 +56,7 @@ bool Fila_Inserir(Fila_De_Atendimento *fila, PACIENTE *paciente) {
     return true;
 }
 
-PACIENTE *Fila_Remover(Fila_De_Atendimento *fila) {
+PACIENTE *fila_remover(fila_de_atendimento *fila) {
     if (fila == NULL && !Fila_Vazia(fila)) {
         return NULL;
     }
@@ -65,7 +65,7 @@ PACIENTE *Fila_Remover(Fila_De_Atendimento *fila) {
     return pacienteRemovido;
 }
 
-void Fila_Liberar(Fila_De_Atendimento **fila) {
+void fila_liberar(fila_de_atendimento **fila) {
     if (fila == NULL || *fila == NULL) {
         return;
     }

@@ -7,12 +7,12 @@ void ProcessarComandos();
 
 int main(void){
     //TESTE 
-    PACIENTE *testePaciente = Paciente_Criar(1, "Carlos");
-    Historico_InserirProcedimento(Paciente_GetHistorico(testePaciente), "Testando funcionalidade");
+    PACIENTE *testePaciente = paciente_criar(1, "Carlos");
+    historico_inserir_procedimento(paciente_get_historico(testePaciente), "Testando funcionalidade");
     ProcessarComandos();
 
     //LIBERAR MEMORIA
-    Paciente_Free(&testePaciente);
+    paciente_free(&testePaciente);
 
     return 0;
 }

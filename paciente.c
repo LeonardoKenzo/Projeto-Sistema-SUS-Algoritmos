@@ -10,14 +10,14 @@ struct paciente_{
 };
 
 //Cria um paciente com id, nome e historico proprio
-PACIENTE *Paciente_Criar(int id, char *nome){
+PACIENTE *paciente_criar(int id, char *nome){
     PACIENTE *paciente = (PACIENTE *)calloc(1, sizeof(PACIENTE));
     if(paciente != NULL){
 
         //Inicializa todas as informacoes do paciente
         paciente->id = id;
         paciente->nome = strdup(nome);
-        paciente->historico = Historico_Criar();
+        paciente->historico = historico_criar();
 
         return paciente;
     }
@@ -25,28 +25,28 @@ PACIENTE *Paciente_Criar(int id, char *nome){
 }
 
 //Retorna o historico do paciente
-HISTORICO *Paciente_GetHistorico(PACIENTE *paciente){
+HISTORICO *paciente_get_historico(PACIENTE *paciente){
     return paciente->historico;
 }
 
 
 //Libera a memoria de todas as informacoes do paciente, inclusive o historico
-void Paciente_Free(PACIENTE **paciente){
+void paciente_free(PACIENTE **paciente){
     if(paciente != NULL){
-        Historico_Free(&((*paciente)->historico));
+        historico_free(&((*paciente)->historico));
         free((*paciente)->nome);
         free(*paciente);
         *paciente = NULL;
     }
 }
 
-int Paciente_GetID(PACIENTE *paciente){
+int paciente_get_id(PACIENTE *paciente){
     if(paciente != NULL){
         return paciente->id;
     }
 }
 
-char *Paciente_GetNome(PACIENTE *paciente){
+char *paciente_get_nome(PACIENTE *paciente){
     if(paciente != NULL){
         return paciente->nome;
     }

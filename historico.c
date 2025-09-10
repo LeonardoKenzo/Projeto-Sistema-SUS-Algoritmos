@@ -11,7 +11,7 @@ struct historico_{
 };
 
 //Cria e inicializa um historico novo
-HISTORICO *Historico_Criar(){
+HISTORICO *historico_criar(){
     HISTORICO *historico = (HISTORICO *)calloc(1, sizeof(HISTORICO));
     if(historico != NULL){
 
@@ -26,7 +26,7 @@ HISTORICO *Historico_Criar(){
 }
 
 //Libera a memoria do historico
-void Historico_Free(HISTORICO **historico){
+void historico_free(HISTORICO **historico){
     if(historico != NULL){
         
         //Libera a memoria de todos os procedimentos
@@ -41,7 +41,7 @@ void Historico_Free(HISTORICO **historico){
 }
 
 //Printa o historico medico inteiro
-void Historico_Printar(HISTORICO *historico){
+void historico_printar(HISTORICO *historico){
     if(historico != NULL){
         for(int i = 0; i < historico->tamanho; i++){
             printf("%d. %s\n", i + 1, historico->procedimentos[i]);
@@ -50,8 +50,8 @@ void Historico_Printar(HISTORICO *historico){
 }
 
 //Insere um procedimento ao historico
-bool Historico_InserirProcedimento(HISTORICO *historico, char *procedimento){
-    if(!Historico_EstaCheio(historico) && (historico->quantidadeCaracteres + strlen(procedimento)) <= 100){
+bool historico_inserir_procedimento(HISTORICO *historico, char *procedimento){
+    if(!historico_esta_cheio(historico) && (historico->quantidadeCaracteres + strlen(procedimento)) <= 100){
         historico->quantidadeCaracteres += strlen(procedimento);
 
         //Insere o procedimento
@@ -65,8 +65,8 @@ bool Historico_InserirProcedimento(HISTORICO *historico, char *procedimento){
 }
 
 //Remove o ultimo procedimento adicionado do historico
-bool Historico_RemoverProcedimento(HISTORICO *historico){
-    if(!Historico_EstaVazio(historico)){
+bool historico_remover_procedimento(HISTORICO *historico){
+    if(!historico_esta_vazio(historico)){
         
         //Mostra qual procedimento foi removido
         printf("\"%s\" foi removido do histórico médico.\n", historico->procedimentos[historico->tamanho - 1]);
@@ -82,7 +82,7 @@ bool Historico_RemoverProcedimento(HISTORICO *historico){
 }
 
 //Verifica se o historico esta cheio
-bool Historico_EstaCheio(HISTORICO *historico){
+bool historico_esta_cheio(HISTORICO *historico){
     if((historico != NULL && historico->tamanho == 10) || (historico != NULL && historico->quantidadeCaracteres >= 100)){
         return true;
     }
@@ -90,7 +90,7 @@ bool Historico_EstaCheio(HISTORICO *historico){
 }
 
 //Verifica se o historico esta vazio
-bool Historico_EstaVazio(HISTORICO *historico){
+bool historico_esta_vazio(HISTORICO *historico){
     if(historico != NULL && historico->tamanho == 0){
         return true;
     }

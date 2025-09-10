@@ -3,12 +3,12 @@
     #include <stdbool.h>
 
     typedef struct historico_ HISTORICO;
-    HISTORICO *Historico_Criar();
-    void Historico_Free(HISTORICO **historico);
-    void Historico_Printar(HISTORICO *historico);
-    bool Historico_EstaCheio(HISTORICO *historico);
-    bool Historico_EstaVazio(HISTORICO *historico);
-    bool Historico_RemoverProcedimento(HISTORICO *historico);
-    bool Historico_InserirProcedimento(HISTORICO *historico, char *procedimento);
+    HISTORICO *historico_criar();
+    void historico_free(HISTORICO **historico);
+    void historico_printar(HISTORICO *historico);
+    bool historico_esta_cheio(HISTORICO *historico);
+    bool historico_esta_vazio(HISTORICO *historico);
+    bool historico_remover_procedimento(HISTORICO *historico);
+    bool historico_inserir_procedimento(HISTORICO *historico, char *procedimento);
 
 #endif

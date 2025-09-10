@@ -10,32 +10,32 @@ struct relacao_de_pacientes_{
     int capacidade;
 };
 
-int BuscaBinaria_Indice(Relacao_De_Pacientes **relacao, int id, int inicio, int fim){
+int busca_binaria_indice(Relacao_De_Pacientes **relacao, int id, int inicio, int fim){
     if (inicio > fim){
         return -1;
     }
 
     int meio = inicio + (fim - inicio) / 2;
-    int id_meio = Paciente_GetID((*relacao)->pacientes[meio]);
+    int id_meio = paciente_get_id((*relacao)->pacientes[meio]);
 
     if (id_meio == id){
         return meio;
     }
     else if (id_meio > id){
-        return BuscaBinaria_Indice(relacao, id, inicio, meio-1);
+        return busca_binaria_indice(relacao, id, inicio, meio-1);
     }
     else if (id_meio < id){
-        return BuscaBinaria_Indice(relacao, id, meio+1, fim);
+        return busca_binaria_indice(relacao, id, meio+1, fim);
     }
 }
 
-int BuscaBinaria_Insercao(Relacao_De_Pacientes **relacao, int id){
+int busca_binaria_insercao(Relacao_De_Pacientes **relacao, int id){
     int inicio = 0;
     int fim = ((*relacao)->quantidade)-1;
 
     while (inicio <= fim){
         int meio = inicio + (fim - inicio)/2;
-        int id_meio = Paciente_GetID((*relacao)->pacientes[meio]);
+        int id_meio = paciente_get_id((*relacao)->pacientes[meio]);
 
         if (id_meio < id){
             inicio = meio + 1;
@@ -46,7 +46,7 @@ int BuscaBinaria_Insercao(Relacao_De_Pacientes **relacao, int id){
     return inicio;
 }
 
-Relacao_De_Pacientes *Relacao_Criar(){
+Relacao_De_Pacientes *relacao_criar(){
     Relacao_De_Pacientes *relacao;
     relacao = (Relacao_De_Pacientes*)malloc(sizeof(Relacao_De_Pacientes));
     if (relacao == NULL) {
@@ -62,12 +62,12 @@ Relacao_De_Pacientes *Relacao_Criar(){
     return relacao;
 }
 
-void Relacao_Free(Relacao_De_Pacientes **relacao){
+void relacao_free(Relacao_De_Pacientes **relacao){
     if (relacao == NULL || *relacao == NULL){
         return;
     }else{
         for (int i = 0; i < (*relacao)->quantidade; i++){
-            Paciente_Free(&((*relacao)->pacientes[i]));
+            paciente_free(&((*relacao)->pacientes[i]));
         }
         free((*relacao)->pacientes);
         (*relacao)->capacidade = 0;
@@ -78,7 +78,7 @@ void Relacao_Free(Relacao_De_Pacientes **relacao){
     }
 }
 
-bool Relacao_EstaVazia(Relacao_De_Pacientes **relacao){
+bool relacao_esta_vazia(Relacao_De_Pacientes **relacao){
     if (relacao == NULL || *relacao == NULL){
         return true;
     }else{
@@ -86,8 +86,8 @@ bool Relacao_EstaVazia(Relacao_De_Pacientes **relacao){
     }
 }
 
-void Relacao_Listar_Pacientes(Relacao_De_Pacientes **relacao){
-    if (relacao == NULL || *relacao == NULL || Relacao_EstaVazia(relacao)){
+void relacao_listar_pacientes(Relacao_De_Pacientes **relacao){
+    if (relacao == NULL || *relacao == NULL || relacao_esta_vazia(relacao)){
         printf("Relação Vazia ou inexistente\n");
         return;
     }else{
@@ -95,8 +95,8 @@ void Relacao_Listar_Pacientes(Relacao_De_Pacientes **relacao){
 
         for (int i = 0; i < (*relacao)->quantidade; i++){        
             PACIENTE *p = (*relacao)->pacientes[i];
-            int id = Paciente_GetID(p);
-            char *nome = Paciente_GetNome(p);
+            int id = paciente_get_id(p);
+            char *nome = paciente_get_nome(p);
 
             printf("%-10d | %-30s\n", id, nome);
         }
@@ -105,12 +105,12 @@ void Relacao_Listar_Pacientes(Relacao_De_Pacientes **relacao){
     return;
 }
 
-PACIENTE *Registro_Busca(Relacao_De_Pacientes **relacao, int id){
-    if (relacao == NULL || *relacao == NULL || Relacao_EstaVazia(relacao)){
+PACIENTE *registro_busca(Relacao_De_Pacientes **relacao, int id){
+    if (relacao == NULL || *relacao == NULL || relacao_esta_vazia(relacao)){
         printf("Relação Vazia ou inválida\n");
         return NULL;
     }else{
-        int aux = BuscaBinaria_Indice(relacao, id, 0, ((*relacao)->quantidade)-1);
+        int aux = busca_binaria_indice(relacao, id, 0, ((*relacao)->quantidade)-1);
         if (aux == -1){
             return NULL;
         }else{
@@ -119,15 +119,15 @@ PACIENTE *Registro_Busca(Relacao_De_Pacientes **relacao, int id){
     }
 }
 
-bool Relacao_InserirPaciente(Relacao_De_Pacientes **relacao, PACIENTE *paciente){
+bool relacao_inserir_paciente(Relacao_De_Pacientes **relacao, PACIENTE *paciente){
     if (relacao == NULL || *relacao == NULL){
         printf("Relação inválida\n");
         return NULL;
     }
 
-    int id_atual = Paciente_GetID(paciente);
+    int id_atual = paciente_get_id(paciente);
 
-    if (Registro_Busca(relacao, id_atual) != NULL){
+    if (registro_busca(relacao, id_atual) != NULL){
         printf("Um paciente com mesmo Id já foi registrado\n");
         return false;
     }
@@ -143,7 +143,7 @@ bool Relacao_InserirPaciente(Relacao_De_Pacientes **relacao, PACIENTE *paciente)
         }
     }
 
-    int indice_insercao = BuscaBinaria_Insercao(relacao, id_atual);
+    int indice_insercao = busca_binaria_insercao(relacao, id_atual);
     for (int i = (*relacao)->quantidade; i > indice_insercao; i--){
         (*relacao)->pacientes[i] = (*relacao)->pacientes[i-1];
     }
@@ -153,19 +153,19 @@ bool Relacao_InserirPaciente(Relacao_De_Pacientes **relacao, PACIENTE *paciente)
     return true;
 }
     
-bool Relacao_ApagarPaciente(Relacao_De_Pacientes **relacao, int id){
+bool relacao_apagar_paciente(Relacao_De_Pacientes **relacao, int id){
     if(relacao == NULL || *relacao == NULL){
         printf("Relação inválida\n");
         return false;
     }
 
-    int indice = BuscaBinaria_Indice(relacao, id, 0, ((*relacao)->quantidade)-1);
+    int indice = busca_binaria_indice(relacao, id, 0, ((*relacao)->quantidade)-1);
     if (indice == -1){
         printf("Paciente inexistente\n");
         return false;
     }else{
         PACIENTE* paciente_a_remover = (*relacao)->pacientes[indice];
-        Paciente_Free(&paciente_a_remover);
+        paciente_free(&paciente_a_remover);
 
         for (int i = indice; i < ((*relacao)->quantidade)- 1; i++){
             (*relacao)->pacientes[i] = (*relacao)->pacientes[i+1];
