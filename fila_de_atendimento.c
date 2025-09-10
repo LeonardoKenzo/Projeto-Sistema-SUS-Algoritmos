@@ -1,4 +1,4 @@
-#include "fila_de_atendimente.h"
+#include "fila_de_atendimento.h"
 #include "paciente.h"
 
 #include <stdio.h>
@@ -11,10 +11,10 @@ struct fila_de_atendimento_
     int capacidade;
     int inicio;
     int fim;
-    FILA_DE_ATENDIMENTO* proximo;
+    PACIENTE *proximo;
 };
 
-FILA_DE_ATENDIMENTO *Fila_Criar(int capacidade){
+FILA_DE_ATENDIMENTO *fila_criar(int capacidade){
     FILA_DE_ATENDIMENTO *fila = (FILA_DE_ATENDIMENTO *)malloc(sizeof(FILA_DE_ATENDIMENTO));
     if (fila == NULL) {
         return NULL;
@@ -47,6 +47,7 @@ bool fila_cheia(FILA_DE_ATENDIMENTO *fila) {
 
 bool fila_inserir(FILA_DE_ATENDIMENTO *fila, PACIENTE *paciente) {
     if ((fila == NULL && !fila_cheia(fila)) || paciente == NULL) {
+        printf("Não foi possivel inserir o paciente na triagem.\n");
         return false;
     }
 
@@ -57,7 +58,7 @@ bool fila_inserir(FILA_DE_ATENDIMENTO *fila, PACIENTE *paciente) {
 }
 
 PACIENTE *fila_remover(FILA_DE_ATENDIMENTO *fila) {
-    if (fila == NULL && !Fila_Vazia(fila)) {
+    if (fila == NULL && !fila_vazia(fila)) {
         return NULL;
     }
     PACIENTE *pacienteRemovido = fila->pacientes[fila->inicio];
@@ -68,6 +69,9 @@ PACIENTE *fila_remover(FILA_DE_ATENDIMENTO *fila) {
 void fila_liberar(FILA_DE_ATENDIMENTO **fila) {
     if (fila == NULL || *fila == NULL) {
         return;
+    }
+    for (int i = 0; i < ((*fila)->fim) - 1; i++){
+        paciente_free(&((*fila)->pacientes[i]));
     }
     free((*fila)->pacientes);
     free(*fila);

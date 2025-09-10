@@ -44,10 +44,12 @@ int paciente_get_id(PACIENTE *paciente){
     if(paciente != NULL){
         return paciente->id;
     }
+    return -1;
 }
 
 char *paciente_get_nome(PACIENTE *paciente){
     if(paciente != NULL){
         return paciente->nome;
     }
+    return NULL;
 }

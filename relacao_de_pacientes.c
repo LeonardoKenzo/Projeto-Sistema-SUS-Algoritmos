@@ -16,15 +16,15 @@ int busca_binaria_indice(RELACAO_DE_PACIENTE *relacao, int id, int inicio, int f
     }
 
     int meio = inicio + (fim - inicio) / 2;
-    int id_meio = paciente_get_id(relacao->pacientes[meio]);
+    int idMeio = paciente_get_id(relacao->pacientes[meio]);
 
-    if (id_meio == id){
+    if (idMeio == id){
         return meio;
     }
-    else if (id_meio > id){
+    else if (idMeio > id){
         return busca_binaria_indice(relacao, id, inicio, meio-1);
     }
-    else if (id_meio < id){
+    else if (idMeio < id){
         return busca_binaria_indice(relacao, id, meio+1, fim);
     }
 }
@@ -66,15 +66,14 @@ RELACAO_DE_PACIENTE *relacao_criar(){
 void relacao_free(RELACAO_DE_PACIENTE **relacao){
     if (relacao == NULL || *relacao == NULL){
         return;
-    }else{
-        for (int i = 0; i < (*relacao)->quantidade; i++){
-            paciente_free(&((*relacao)->pacientes[i]));
-        }
-        free((*relacao)->pacientes);
-        free(*relacao);
-        *relacao = NULL;
-        return;
     }
+    for (int i = 0; i < (*relacao)->quantidade; i++){
+        paciente_free(&((*relacao)->pacientes[i]));
+    }
+    free((*relacao)->pacientes);
+    free(*relacao);
+    *relacao = NULL;
+    return;
 }
 
 bool relacao_esta_vazia(RELACAO_DE_PACIENTE *relacao){
@@ -104,7 +103,7 @@ void relacao_listar_pacientes(RELACAO_DE_PACIENTE *relacao){
     return;
 }
 
-PACIENTE *registro_busca(RELACAO_DE_PACIENTE *relacao, int id){
+PACIENTE *relacao_registro_busca(RELACAO_DE_PACIENTE *relacao, int id){
     if (relacao == NULL || relacao_esta_vazia(relacao)){
         printf("Relação Vazia ou inválida\n");
         return NULL;
@@ -121,15 +120,10 @@ PACIENTE *registro_busca(RELACAO_DE_PACIENTE *relacao, int id){
 bool relacao_inserir_paciente(RELACAO_DE_PACIENTE *relacao, PACIENTE *paciente){
     if (relacao == NULL){
         printf("Relação inválida\n");
-        return NULL;
+        return false;
     }
 
     int id_atual = paciente_get_id(paciente);
-
-    if (registro_busca(relacao, id_atual) != NULL){
-        printf("Um paciente com mesmo Id já foi registrado\n");
-        return false;
-    }
 
     if (relacao->capacidade == relacao->quantidade){
         PACIENTE **aux = realloc(relacao->pacientes, ((relacao->capacidade) * 2) * sizeof(PACIENTE*));
@@ -167,8 +161,8 @@ bool relacao_apagar_paciente(RELACAO_DE_PACIENTE *relacao, int id){
         printf("Paciente inexistente\n");
         return false;
     }else{
-        PACIENTE* paciente_a_remover = relacao->pacientes[indice];
-        paciente_free(&paciente_a_remover);
+        PACIENTE* pacienteRemover = relacao->pacientes[indice];
+        paciente_free(&pacienteRemover);
 
         for (int i = indice; i < (relacao->quantidade)- 1; i++){
             relacao->pacientes[i] = relacao->pacientes[i+1];
