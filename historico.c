@@ -45,25 +45,31 @@ HISTORICO *historico_criar(){
 
 //Libera a memoria do historico
 void historico_free(HISTORICO **historico){
-    if(historico != NULL || *historico != NULL){
-        
-        //Libera a memoria de todos os procedimentos
-        for(int i = 0; i < (*historico)->tamanho; i++){
-            free((*historico)->procedimentos[i]);
-        }
-
-        //Libera a memoria do historico
-        free(*historico);
-        *historico = NULL;
+    if(historico == NULL || *historico == NULL){
+        return;
     }
+    //Libera a memoria de todos os procedimentos
+    for(int i = 0; i < (*historico)->tamanho; i++){
+        if((*historico)->procedimentos[i] == NULL)
+            continue;
+        free((*historico)->procedimentos[i]);
+        (*historico)->procedimentos[i] = NULL;
+    }
+
+    //Libera a memoria do historico
+    free(*historico);
+    *historico = NULL;
 }
 
 //Printa o historico medico inteiro
 void historico_printar(HISTORICO *historico){
-    if(historico != NULL){
+    if(historico != NULL && !historico_esta_vazio(historico)){
         for(int i = 0; i < historico->tamanho; i++){
             printf("%d. %s\n", i + 1, historico->procedimentos[i]);
         }
+    }
+    else if(historico_esta_vazio(historico)){
+        printf("O histórico está vazio.\n");
     }
 }
 

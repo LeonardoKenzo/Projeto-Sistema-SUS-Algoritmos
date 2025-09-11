@@ -1,12 +1,14 @@
 #include "paciente.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 struct paciente_{
     int id;
     char *nome;
     HISTORICO *historico;
     bool estaMorto;
+    bool emAtendimento;
 };
 
 //Cria um paciente com id, nome e historico proprio
@@ -19,6 +21,7 @@ PACIENTE *paciente_criar(int id, char *nome){
         paciente->nome = strdup(nome);
         paciente->historico = historico_criar();
         paciente->estaMorto = false;
+        paciente->emAtendimento = false;
 
         return paciente;
     }
@@ -32,12 +35,13 @@ HISTORICO *paciente_get_historico(PACIENTE *paciente){
 
 //Libera a memoria de todas as informacoes do paciente, inclusive o historico
 void paciente_free(PACIENTE **paciente){
-    if(paciente != NULL || *paciente != NULL){
-        historico_free(&((*paciente)->historico));
-        free((*paciente)->nome);
-        free(*paciente);
-        *paciente = NULL;
+    if(paciente == NULL || *paciente == NULL){
+        return;
     }
+    historico_free(&((*paciente)->historico));
+    free((*paciente)->nome);
+    free(*paciente);
+    *paciente = NULL;
 }
 
 int paciente_get_id(PACIENTE *paciente){
@@ -47,16 +51,50 @@ int paciente_get_id(PACIENTE *paciente){
     return -1;
 }
 
-char *paciente_get_nome(PACIENTE *paciente){
-    if(paciente != NULL){
-        return paciente->nome;
-    }
-    return NULL;
-}
-
 int paciente_get_obito(PACIENTE *paciente){
     if(paciente != NULL){
         return paciente->estaMorto;
     }
     return -1;
+}
+
+void paciente_registrar_obito(PACIENTE *paciente){
+    if(paciente != NULL && paciente->emAtendimento && paciente->estaMorto == false){
+        paciente->estaMorto = true;
+        paciente->emAtendimento = false;
+        printf("Óbito do paciente %s registrado.\n", paciente->nome);
+    }
+    else if(paciente != NULL && paciente->estaMorto){
+        printf("O paciente %s já tem registro de óbito.\n", paciente->nome);
+    }
+    else if(paciente != NULL && paciente->emAtendimento == false){
+        printf("Registro de óbito para o paciente %s falhou.\n", paciente->nome);
+    }
+}
+
+int paciente_get_atendimento(PACIENTE *paciente){
+    if(paciente != NULL){
+        return paciente->emAtendimento;
+    }
+    return -1;
+}
+
+void paciente_em_atendimento(PACIENTE *paciente){
+    if(paciente != NULL && paciente->emAtendimento == false && paciente->estaMorto == false){
+        paciente->emAtendimento = true;
+        printf("Paciente %s em atendimento.\n", paciente->nome);
+    }
+    else if(paciente != NULL && paciente->emAtendimento){
+        printf("O paciente %s já está em atendimento.\n", paciente->nome);
+    }
+    else if(paciente != NULL && paciente->estaMorto){
+        printf("O paciente %s tem registro de óbito e não pode ser atendido.\n", paciente->nome);
+    }
+}
+
+char *paciente_get_nome(PACIENTE *paciente){
+    if(paciente != NULL){
+        return paciente->nome;
+    }
+    return NULL;
 }

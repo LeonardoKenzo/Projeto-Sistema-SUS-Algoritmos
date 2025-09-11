@@ -63,7 +63,7 @@ RELACAO_DE_PACIENTE *relacao_criar(){
     return relacao;
 }
 
-//Libera a relacao e todos os pacientes nela
+//Libera a relacao e todos os pacientes nela (Responsavel por liberar os pacientes)
 void relacao_free(RELACAO_DE_PACIENTE **relacao){
     if (relacao == NULL || *relacao == NULL){
         return;
@@ -173,7 +173,7 @@ bool relacao_apagar_paciente(RELACAO_DE_PACIENTE *relacao, int id){
     paciente_free(&pacienteRemover);
 
     for(int i = indice; i < (relacao->quantidade)- 1; i++){
-        relacao->pacientes[i] = relacao->pacientes[i+1];
+        relacao->pacientes[i] = relacao->pacientes[i + 1];
     }
 
     relacao->quantidade -= 1;

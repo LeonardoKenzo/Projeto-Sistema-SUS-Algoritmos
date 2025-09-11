@@ -71,14 +71,14 @@ PACIENTE *fila_remover(FILA_DE_ATENDIMENTO *fila) {
     return pacienteRemovido;
 }
 
-//Libera a fila e todos os pacientes nela
+//Libera a fila e os pacientes apontam para NULL (liberam os pacientes)
 void fila_free(FILA_DE_ATENDIMENTO **fila) {
     if (fila == NULL || *fila == NULL) {
         return;
     }
 
     for (int i = 0; i < ((*fila)->fim) - 1; i++){
-        paciente_free(&((*fila)->pacientes[i]));
+        (*fila)->pacientes[i] = NULL;
     }
     free((*fila)->pacientes);
     free(*fila);
