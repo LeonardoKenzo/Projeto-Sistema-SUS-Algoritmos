@@ -28,6 +28,8 @@ int main(void){
         do{
             printar_menu();
         }while(!ler_verificar_numero(&comando));
+
+        //Garante que o comando esteja entre 1 e 8
         if(comando < 1 || comando > 8)
             printf("Selecione um comando válido.\n\n");
         
@@ -119,6 +121,7 @@ void registrar_obito(RELACAO_DE_PACIENTE *relacao){
 
     //Registra obito do paciente
     paciente_registrar_obito(paciente);
+    relacao_apagar_paciente(relacao, paciente_get_id(paciente));
 }
 
 void adicionar_procedimento(RELACAO_DE_PACIENTE *relacao){
@@ -185,15 +188,15 @@ bool ler_verificar_numero(int *saida){
     scanf(" %[^\n]", entrada);
 
     entrada[strcspn(entrada, "\n")] = '\0';
-    if (entrada[0] == '-') {
-        printf("Formato inválido.\n");
+    if(entrada[0] == '-') {
+        printf("Formato inválido.\n\n");
         return false;
     }
 
     //Verifica se todos os caracteres são dígitos
-    for (int i = 0; entrada[i] != '\0'; i++) {
+    for(int i = 0; entrada[i] != '\0'; i++) {
         if(!isdigit((unsigned char)entrada[i])) {
-            printf("Formato inválido.\n");
+            printf("Formato inválido.\n\n");
             return false;
         }
     }
@@ -202,8 +205,8 @@ bool ler_verificar_numero(int *saida){
     *saida = strtol(entrada, &fim, 10);
 
     //Confere se converteu e não sobrou lixo
-    if (fim == entrada || *fim != '\0') {
-        printf("Formato inválido.\n");
+    if(fim == entrada || *fim != '\0') {
+        printf("Formato inválido.\n\n");
         return false;
     }
 

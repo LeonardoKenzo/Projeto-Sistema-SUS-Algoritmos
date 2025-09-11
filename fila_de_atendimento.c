@@ -62,10 +62,11 @@ bool fila_inserir(FILA_DE_ATENDIMENTO *fila, PACIENTE *paciente) {
 
 //Remove o primeiro paciente que entrou na fila
 PACIENTE *fila_remover(FILA_DE_ATENDIMENTO *fila) {
-    if (fila == NULL && !fila_vazia(fila)) {
+    if (fila != NULL && fila_vazia(fila)) {
+        printf("Não tem pacientes para serem atendidos.\n");
         return NULL;
     }
-
+    
     PACIENTE *pacienteRemovido = fila->pacientes[fila->inicio];
     fila->inicio = (fila->inicio + 1) % fila->capacidade;
     return pacienteRemovido;
@@ -77,6 +78,7 @@ void fila_free(FILA_DE_ATENDIMENTO **fila) {
         return;
     }
 
+    //Tira todos os pacientes da fila
     for (int i = 0; i < ((*fila)->fim) - 1; i++){
         (*fila)->pacientes[i] = NULL;
     }
