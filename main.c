@@ -5,8 +5,8 @@
 #include "relacao_de_pacientes.h"
 #define TAMFILA 25
 
-void printar_menu();
 PACIENTE *ler_paciente(RELACAO_DE_PACIENTE *relacao);
+void printar_menu();
 void registrar_paciente(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila, PACIENTE *novoPaciente);
 
 int main(void){

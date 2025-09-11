@@ -6,7 +6,7 @@ struct paciente_{
     int id;
     char *nome;
     HISTORICO *historico;
-    bool em_atendimento;
+    bool estaMorto;
 };
 
 //Cria um paciente com id, nome e historico proprio
@@ -18,7 +18,7 @@ PACIENTE *paciente_criar(int id, char *nome){
         paciente->id = id;
         paciente->nome = strdup(nome);
         paciente->historico = historico_criar();
-        paciente->em_atendimento = false;
+        paciente->estaMorto = false;
 
         return paciente;
     }
@@ -52,4 +52,11 @@ char *paciente_get_nome(PACIENTE *paciente){
         return paciente->nome;
     }
     return NULL;
+}
+
+int paciente_get_obito(PACIENTE *paciente){
+    if(paciente != NULL){
+        return paciente->estaMorto;
+    }
+    return -1;
 }

@@ -19,11 +19,14 @@ FILA_DE_ATENDIMENTO *fila_criar(int capacidade){
     if (fila == NULL) {
         return NULL;
     }
+
     fila->pacientes = (PACIENTE **)malloc(capacidade * sizeof(PACIENTE *));
     if (fila->pacientes == NULL) {
         free(fila);
         return NULL;
     }
+
+    //Inicializa as variaveis da fila
     fila->capacidade = capacidade;
     fila->inicio = 0;
     fila->fim = 0;
@@ -57,19 +60,23 @@ bool fila_inserir(FILA_DE_ATENDIMENTO *fila, PACIENTE *paciente) {
     return true;
 }
 
+//Remove o primeiro paciente que entrou na fila
 PACIENTE *fila_remover(FILA_DE_ATENDIMENTO *fila) {
     if (fila == NULL && !fila_vazia(fila)) {
         return NULL;
     }
+
     PACIENTE *pacienteRemovido = fila->pacientes[fila->inicio];
     fila->inicio = (fila->inicio + 1) % fila->capacidade;
     return pacienteRemovido;
 }
 
+//Libera a fila e todos os pacientes nela
 void fila_liberar(FILA_DE_ATENDIMENTO **fila) {
     if (fila == NULL || *fila == NULL) {
         return;
     }
+
     for (int i = 0; i < ((*fila)->fim) - 1; i++){
         paciente_free(&((*fila)->pacientes[i]));
     }
