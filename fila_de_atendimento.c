@@ -72,7 +72,7 @@ PACIENTE *fila_remover(FILA_DE_ATENDIMENTO *fila) {
 }
 
 //Libera a fila e todos os pacientes nela
-void fila_liberar(FILA_DE_ATENDIMENTO **fila) {
+void fila_free(FILA_DE_ATENDIMENTO **fila) {
     if (fila == NULL || *fila == NULL) {
         return;
     }

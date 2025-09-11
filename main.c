@@ -6,8 +6,11 @@
 #define TAMFILA 25
 
 PACIENTE *ler_paciente(RELACAO_DE_PACIENTE *relacao);
-void printar_menu();
+PACIENTE *buscar_paciente(RELACAO_DE_PACIENTE *relacao);
 void registrar_paciente(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila, PACIENTE *novoPaciente);
+void adicionar_procedimento(RELACAO_DE_PACIENTE *relacao);
+void mostrar_historico(RELACAO_DE_PACIENTE *relacao);
+void printar_menu();
 
 int main(void){
     RELACAO_DE_PACIENTE *relacao = relacao_criar();
@@ -23,23 +26,25 @@ int main(void){
             PACIENTE *novoPaciente = ler_paciente(relacao);
             registrar_paciente(relacao, fila, novoPaciente);
             break;
-        case 2:
+        case 2: //Registrar obito do Paciente
             break;
-        case 3:
+        case 3: //Adicionar procedimento ao historico medico
+            adicionar_procedimento(relacao);
             break;
-        case 4:
+        case 4: //Desfazer procedimento do historico medico
             break;
-        case 5:
+        case 5: //Chamar paciente para atendimento
             break;
-        case 6:
+        case 6: //Mostrar fila de espera
             break;
-        case 7:
+        case 7: //Mostrar historico do paciente
+            mostrar_historico(relacao);
             break;
         }
     }while(comando != 8);
 
     //LIBERAR MEMORIA
-    fila_liberar(&fila);
+    fila_free(&fila);
     relacao_free(&relacao);
 
     return 0;
@@ -61,7 +66,7 @@ PACIENTE *ler_paciente(RELACAO_DE_PACIENTE *relacao){
     int id;
     char nome[100];
     //Le o nome e id do paciente
-    printf("Digite o nome do paciente: ");
+    printf("\nDigite o nome do paciente: ");
     scanf(" %[^\n]", nome);
     printf("Digite o id a ser registrado: ");
     scanf(" %d", &id);
@@ -89,4 +94,40 @@ void registrar_paciente(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila,
         return;
     }
     printf("Paciente registrado e dentro da fila de espera!\nNome: %s\nId: %d\n\n", paciente_get_nome(novoPaciente), paciente_get_id(novoPaciente));
+}
+
+void mostrar_historico(RELACAO_DE_PACIENTE *relacao){
+    PACIENTE *paciente = buscar_paciente(relacao);
+    printf("Paciente: %s\n", paciente_get_nome(paciente));
+    historico_printar(paciente_get_historico(paciente));
+    printf("\n");
+}
+
+void adicionar_procedimento(RELACAO_DE_PACIENTE *relacao){
+    PACIENTE *paciente = buscar_paciente(relacao);
+
+    //Insere o procedimento
+    char procedimento[100];
+    printf("Escreva o procedimento abaixo:\n");
+    scanf(" %[^\n]", procedimento);
+    historico_inserir_procedimento(paciente_get_historico(paciente), procedimento);
+    printf("\n");
+}
+
+//Busca um paciente dentro do registro
+PACIENTE *buscar_paciente(RELACAO_DE_PACIENTE *relacao){
+    int id;
+    PACIENTE *paciente;
+
+    //Garante que o id deva existir
+    do{
+        printf("\nDigite o id do paciente: ");
+        scanf(" %d", &id);
+        paciente = relacao_registro_busca(relacao, id);
+        if(paciente == NULL){
+            printf("Paciente não registrado, digite um id válido.\n");
+        }
+    }while(paciente == NULL);
+
+    return paciente;
 }

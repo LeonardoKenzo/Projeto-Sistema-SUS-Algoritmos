@@ -2,13 +2,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define QUANTPROCED 10
 
 //Funciona como uma Pilha de procedimentos medicos
 struct historico_{
-    char *procedimentos[10];
+    char *procedimentos[QUANTPROCED];
     int tamanho;
     int quantidadeCaracteres;
 };
+
+//Verifica se o historico esta cheio
+bool historico_esta_cheio(HISTORICO *historico){
+    if((historico != NULL && historico->tamanho == 10) || (historico != NULL && historico->quantidadeCaracteres >= 100)){
+        return true;
+    }
+    return false;
+}
+
+//Verifica se o historico esta vazio
+bool historico_esta_vazio(HISTORICO *historico){
+    if(historico != NULL && historico->tamanho == 0){
+        return true;
+    }
+    return false;
+}
 
 //Cria e inicializa um historico novo
 HISTORICO *historico_criar(){
@@ -16,7 +33,7 @@ HISTORICO *historico_criar(){
     if(historico != NULL){
 
         //Inicializacao da variavel do historico
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < QUANTPROCED; i++){
             historico->procedimentos[i] = NULL;
         }
         historico->quantidadeCaracteres = 0;
@@ -58,6 +75,7 @@ bool historico_inserir_procedimento(HISTORICO *historico, char *procedimento){
         //Insere o procedimento
         historico->procedimentos[historico->tamanho] = strdup(procedimento);
         historico->tamanho++;
+        printf("Procedimento inserido!\n");
         return true;
     }
     //Se nao conseguir inserir
@@ -79,21 +97,5 @@ bool historico_remover_procedimento(HISTORICO *historico){
     }
     //Se nao conseguir remover
     printf("Não há procedimentos para remover.\n");
-    return false;
-}
-
-//Verifica se o historico esta cheio
-bool historico_esta_cheio(HISTORICO *historico){
-    if((historico != NULL && historico->tamanho == 10) || (historico != NULL && historico->quantidadeCaracteres >= 100)){
-        return true;
-    }
-    return false;
-}
-
-//Verifica se o historico esta vazio
-bool historico_esta_vazio(HISTORICO *historico){
-    if(historico != NULL && historico->tamanho == 0){
-        return true;
-    }
     return false;
 }
