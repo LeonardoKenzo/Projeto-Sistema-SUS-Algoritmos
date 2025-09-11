@@ -10,12 +10,8 @@ PACIENTE *ler_paciente(RELACAO_DE_PACIENTE *relacao);
 void registrar_paciente(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila, PACIENTE *novoPaciente);
 
 int main(void){
-    //TESTE 
-    //PACIENTE *testePaciente = paciente_criar(1, "Carlos");
-    //historico_inserir_procedimento(paciente_get_historico(testePaciente), "Testando funcionalidade");
     RELACAO_DE_PACIENTE *relacao = relacao_criar();
     FILA_DE_ATENDIMENTO *fila = fila_criar(TAMFILA);
-
 
     int comando;
     do{
@@ -23,7 +19,7 @@ int main(void){
         scanf(" %d", &comando);
         switch (comando)
         {
-        case 1:
+        case 1: //Registro de Pacientes
             PACIENTE *novoPaciente = ler_paciente(relacao);
             registrar_paciente(relacao, fila, novoPaciente);
             break;
@@ -43,7 +39,6 @@ int main(void){
     }while(comando != 8);
 
     //LIBERAR MEMORIA
-    //paciente_free(&testePaciente);
     fila_liberar(&fila);
     relacao_free(&relacao);
 
@@ -64,15 +59,15 @@ void printar_menu(){
 
 PACIENTE *ler_paciente(RELACAO_DE_PACIENTE *relacao){
     int id;
-    char *nome = NULL;
+    char nome[100];
     //Le o nome e id do paciente
     printf("Digite o nome do paciente: ");
-    scanf(" %[^\n]s", nome);
+    scanf(" %[^\n]", nome);
     printf("Digite o id a ser registrado: ");
     scanf(" %d", &id);
 
     //Verifica se o id ja existe
-    while(paciente_get_id(relacao_registro_busca(relacao, id)) == -1){
+    while(paciente_get_id(relacao_registro_busca(relacao, id)) != -1){
         printf("Esse id já existe, escolha outro: ");
         scanf(" %d", &id);
     }
@@ -93,4 +88,5 @@ void registrar_paciente(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila,
         paciente_free(&novoPaciente);
         return;
     }
+    printf("Paciente registrado e dentro da fila de espera!\nNome: %s\nId: %d\n\n", paciente_get_nome(novoPaciente), paciente_get_id(novoPaciente));
 }

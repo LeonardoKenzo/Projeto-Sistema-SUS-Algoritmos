@@ -48,8 +48,7 @@ int busca_binaria_insercao(RELACAO_DE_PACIENTE *relacao, int id){
 }
 
 RELACAO_DE_PACIENTE *relacao_criar(){
-    RELACAO_DE_PACIENTE *relacao;
-    relacao = (RELACAO_DE_PACIENTE*)malloc(sizeof(RELACAO_DE_PACIENTE));
+    RELACAO_DE_PACIENTE *relacao = (RELACAO_DE_PACIENTE *)malloc(sizeof(RELACAO_DE_PACIENTE));
     if (relacao == NULL) {
         return NULL;
     }
@@ -104,16 +103,18 @@ void relacao_listar_pacientes(RELACAO_DE_PACIENTE *relacao){
 }
 
 PACIENTE *relacao_registro_busca(RELACAO_DE_PACIENTE *relacao, int id){
-    if (relacao == NULL || relacao_esta_vazia(relacao)){
-        printf("Relação Vazia ou inválida\n");
+    if (relacao == NULL){
+        printf("Relação inválida\n");
+        return NULL;
+    }
+    if(relacao_esta_vazia(relacao)){
+        return NULL;
+    }
+    int aux = busca_binaria_indice(relacao, id, 0, (relacao->quantidade)-1);
+    if (aux == -1){
         return NULL;
     }else{
-        int aux = busca_binaria_indice(relacao, id, 0, (relacao->quantidade)-1);
-        if (aux == -1){
-            return NULL;
-        }else{
-            return relacao->pacientes[aux];
-        }
+        return relacao->pacientes[aux];
     }
 }
 

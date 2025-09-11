@@ -32,7 +32,7 @@ HISTORICO *paciente_get_historico(PACIENTE *paciente){
 
 //Libera a memoria de todas as informacoes do paciente, inclusive o historico
 void paciente_free(PACIENTE **paciente){
-    if(paciente != NULL){
+    if(paciente != NULL || *paciente != NULL){
         historico_free(&((*paciente)->historico));
         free((*paciente)->nome);
         free(*paciente);

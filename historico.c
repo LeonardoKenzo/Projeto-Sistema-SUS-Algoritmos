@@ -16,9 +16,10 @@ HISTORICO *historico_criar(){
     if(historico != NULL){
 
         //Inicializacao da variavel do historico
+        for(int i = 0; i < 10; i++){
+            historico->procedimentos[i] = NULL;
+        }
         historico->quantidadeCaracteres = 0;
-
-        //Topo da pilha de procedimentos
         historico->tamanho = 0; 
         return historico;
     }
@@ -27,7 +28,7 @@ HISTORICO *historico_criar(){
 
 //Libera a memoria do historico
 void historico_free(HISTORICO **historico){
-    if(historico != NULL){
+    if(historico != NULL || *historico != NULL){
         
         //Libera a memoria de todos os procedimentos
         for(int i = 0; i < (*historico)->tamanho; i++){
