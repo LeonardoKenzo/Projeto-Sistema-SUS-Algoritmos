@@ -86,3 +86,19 @@ void fila_free(FILA_DE_ATENDIMENTO **fila) {
     free(*fila);
     *fila = NULL;
 }
+
+void fila_printar(FILA_DE_ATENDIMENTO *fila){
+    if(fila == NULL || fila_vazia(fila)){
+        printf("Fila de atendimento vazia.\n");
+        return;
+    }
+    printf("Fila de atendimento:\n");
+    int i = fila->inicio;
+    int pos=1;
+    while(i != fila->fim){
+        PACIENTE *paciente = fila->pacientes[i];
+        printf("Paciente %d: %s, ID: %d\n", pos, paciente_get_nome(paciente), paciente_get_id(paciente));
+        i = (i + 1) % fila->capacidade;
+        pos++;
+    }
+}

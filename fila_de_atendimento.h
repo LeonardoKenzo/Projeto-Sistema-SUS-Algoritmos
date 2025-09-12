@@ -11,5 +11,6 @@
     bool fila_cheia(FILA_DE_ATENDIMENTO *fila);
     bool fila_vazia(FILA_DE_ATENDIMENTO *fila);
     void fila_free(FILA_DE_ATENDIMENTO **fila);
+    void fila_printar(FILA_DE_ATENDIMENTO *fila);
 
 #endif
