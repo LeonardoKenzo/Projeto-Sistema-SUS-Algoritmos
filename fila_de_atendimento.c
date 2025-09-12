@@ -92,6 +92,8 @@ void fila_printar(FILA_DE_ATENDIMENTO *fila){
         printf("Fila de atendimento vazia.\n");
         return;
     }
+
+    //Printa a fila com a posicao do paciente e suas informacoes
     printf("Fila de atendimento:\n");
     int i = fila->inicio;
     int pos=1;

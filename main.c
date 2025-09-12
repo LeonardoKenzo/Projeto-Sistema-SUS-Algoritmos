@@ -5,7 +5,7 @@
 #include "paciente.h"
 #include "fila_de_atendimento.h"
 #include "relacao_de_pacientes.h"
-#define TAMFILA 25
+#define TAM_FILA 25
 
 PACIENTE *ler_paciente(RELACAO_DE_PACIENTE *relacao);
 PACIENTE *buscar_paciente(RELACAO_DE_PACIENTE *relacao);
@@ -20,7 +20,7 @@ void printar_menu();
 
 int main(void){
     RELACAO_DE_PACIENTE *relacao = relacao_criar();
-    FILA_DE_ATENDIMENTO *fila = fila_criar(TAMFILA);
+    FILA_DE_ATENDIMENTO *fila = fila_criar(TAM_FILA);
 
     int comando;
     do{
@@ -52,6 +52,8 @@ int main(void){
             chamar_paciente_atendimento(fila);
             break;
         case 6: //Mostrar fila de espera
+            fila_printar(fila);
+            printf("\n");
             break;
         case 7: //Mostrar historico do paciente
             mostrar_historico(relacao);
