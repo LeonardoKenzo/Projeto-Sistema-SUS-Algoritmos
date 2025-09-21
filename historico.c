@@ -3,10 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 #define QUANTPROCED 10
+#define QUANTCARACTER 100   
 
 //Funciona como uma Pilha de procedimentos medicos
 struct historico_{
-    char *procedimentos[QUANTPROCED];
+    char procedimentos[QUANTPROCED][QUANTCARACTER];
     int tamanho;
     int quantidadeCaracteres;
 };
@@ -31,11 +32,6 @@ bool historico_esta_vazio(HISTORICO *historico){
 HISTORICO *historico_criar(){
     HISTORICO *historico = (HISTORICO *)calloc(1, sizeof(HISTORICO));
     if(historico != NULL){
-
-        //Inicializacao da variavel do historico
-        for(int i = 0; i < QUANTPROCED; i++){
-            historico->procedimentos[i] = NULL;
-        }
         historico->quantidadeCaracteres = 0;
         historico->tamanho = 0; 
         return historico;
@@ -47,13 +43,6 @@ HISTORICO *historico_criar(){
 void historico_free(HISTORICO **historico){
     if(historico == NULL || *historico == NULL){
         return;
-    }
-    //Libera a memoria de todos os procedimentos
-    for(int i = 0; i < (*historico)->tamanho; i++){
-        if((*historico)->procedimentos[i] == NULL)
-            continue;
-        free((*historico)->procedimentos[i]);
-        (*historico)->procedimentos[i] = NULL;
     }
 
     //Libera a memoria do historico
@@ -75,11 +64,11 @@ void historico_printar(HISTORICO *historico){
 
 //Insere um procedimento ao historico
 bool historico_inserir_procedimento(HISTORICO *historico, char *procedimento){
-    if(!historico_esta_cheio(historico) && (historico->quantidadeCaracteres + strlen(procedimento)) <= 100){
+    if(!historico_esta_cheio(historico) && strlen(procedimento) <= 100){
         historico->quantidadeCaracteres += strlen(procedimento);
 
         //Insere o procedimento
-        historico->procedimentos[historico->tamanho] = strdup(procedimento);
+        strcpy(historico->procedimentos[historico->tamanho], procedimento);
         historico->tamanho++;
         printf("Procedimento inserido!\n");
         return true;
@@ -104,4 +93,8 @@ bool historico_remover_procedimento(HISTORICO *historico){
     //Se nao conseguir remover
     printf("Não há procedimentos para remover.\n");
     return false;
+}
+
+int historico_get_quantidade_caracteres(HISTORICO *historico){
+    return historico->quantidadeCaracteres;
 }
