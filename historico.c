@@ -14,7 +14,7 @@ struct historico_{
 
 //Verifica se o historico esta cheio
 bool historico_esta_cheio(HISTORICO *historico){
-    if((historico != NULL && historico->tamanho == 10) || (historico != NULL && historico->quantidadeCaracteres >= 100)){
+    if((historico != NULL && historico->tamanho == 10) || (historico != NULL && historico->quantidadeCaracteres >= 1000)){
         return true;
     }
     return false;
@@ -86,7 +86,6 @@ bool historico_remover_procedimento(HISTORICO *historico){
         printf("\"%s\" foi removido do histórico médico.\n", historico->procedimentos[historico->tamanho - 1]);
 
         //Remove o procedimento do historico
-        free(historico->procedimentos[historico->tamanho - 1]);
         historico->tamanho--;
         return true;
     }

@@ -122,8 +122,9 @@ void registrar_obito(RELACAO_DE_PACIENTE *relacao){
     PACIENTE *paciente = buscar_paciente(relacao);
 
     //Registra obito do paciente
-    paciente_registrar_obito(paciente);
-    relacao_apagar_paciente(relacao, paciente_get_id(paciente));
+    if(paciente_registrar_obito(paciente)){
+        relacao_apagar_paciente(relacao, paciente_get_id(paciente));
+    }
 }
 
 void adicionar_procedimento(RELACAO_DE_PACIENTE *relacao){

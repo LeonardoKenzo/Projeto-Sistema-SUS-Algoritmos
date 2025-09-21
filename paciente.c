@@ -58,18 +58,22 @@ int paciente_get_obito(PACIENTE *paciente){
     return -1;
 }
 
-void paciente_registrar_obito(PACIENTE *paciente){
+bool paciente_registrar_obito(PACIENTE *paciente){
     if(paciente != NULL && paciente->emAtendimento && paciente->estaMorto == false){
         paciente->estaMorto = true;
         paciente->emAtendimento = false;
         printf("Óbito do paciente %s registrado.\n", paciente->nome);
+        return true;
     }
     else if(paciente != NULL && paciente->estaMorto){
         printf("O paciente %s já tem registro de óbito.\n", paciente->nome);
+        return false;
     }
     else if(paciente != NULL && paciente->emAtendimento == false){
         printf("Registro de óbito para o paciente %s falhou.\n", paciente->nome);
+        return false;
     }
+    return false;
 }
 
 int paciente_get_atendimento(PACIENTE *paciente){

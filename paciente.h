@@ -9,7 +9,7 @@
     int paciente_get_id(PACIENTE *paciente);
     int paciente_get_obito(PACIENTE *paciente);
     int paciente_get_atendimento(PACIENTE *paciente);
-    void paciente_registrar_obito(PACIENTE *paciente);
+    bool paciente_registrar_obito(PACIENTE *paciente);
     void paciente_em_atendimento(PACIENTE *paciente);
     void paciente_free(PACIENTE **paciente); //Essa funcao da free tambem no historico relacionado a ele
 
