@@ -25,7 +25,7 @@ int busca_binaria_indice(RELACAO_DE_PACIENTE *relacao, int id, int inicio, int f
     else if(idMeio > id){
         return busca_binaria_indice(relacao, id, inicio, meio-1);
     }
-    else if(idMeio < id){
+    else{
         return busca_binaria_indice(relacao, id, meio+1, fim);
     }
 }
@@ -178,4 +178,14 @@ bool relacao_apagar_paciente(RELACAO_DE_PACIENTE *relacao, int id){
 
     relacao->quantidade -= 1;
     return true;
+}
+
+PACIENTE *relacao_remover_paciente_fim(RELACAO_DE_PACIENTE *relacao){
+    if (relacao == NULL || relacao_esta_vazia(relacao)){
+        return NULL;
+    }
+
+    relacao->quantidade -= 1;
+    
+    return relacao->pacientes[relacao->quantidade];
 }

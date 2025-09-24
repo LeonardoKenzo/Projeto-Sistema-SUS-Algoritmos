@@ -9,5 +9,7 @@
     int historico_get_quantidade_caracteres(HISTORICO *historico);
     void historico_printar(HISTORICO *historico);
     void historico_free(HISTORICO **historico);
+    bool historico_esta_vazio(HISTORICO *historico);
+    char *historico_consultar_procedimento_topo(HISTORICO *historico);
 
 #endif

@@ -97,3 +97,11 @@ bool historico_remover_procedimento(HISTORICO *historico){
 int historico_get_quantidade_caracteres(HISTORICO *historico){
     return historico->quantidadeCaracteres;
 }
+
+char *historico_consultar_procedimento_topo(HISTORICO *historico){
+    if (historico == NULL || historico_esta_vazio(historico)){
+        return NULL;
+    }
+
+     return historico->procedimentos[historico->tamanho - 1];
+}
