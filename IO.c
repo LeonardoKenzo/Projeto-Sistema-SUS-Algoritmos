@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_PROCEDIMENTOS 10
 #define MAX_TAMANHO_FILA 25
 
 bool SAVE(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila) {
@@ -60,12 +61,11 @@ bool SAVE(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila) {
 
         //Salvando o histórico do paciente
         HISTORICO *hist = paciente_get_historico(p);
-        int max_procedimentos = 10;
-        char *procedimentos[max_procedimentos];
+        char *procedimentos[MAX_PROCEDIMENTOS];
         int count_procedimentos = 0;
 
         // Esvazia o histórico guardando os procedimentos temporariamente
-        while (!historico_esta_vazio(hist) && count_procedimentos < max_procedimentos) {
+        while (!historico_esta_vazio(hist) && count_procedimentos < MAX_PROCEDIMENTOS) {
             
             // Pega o procedimento do topo
             char *proc_topo = historico_consultar_procedimento_topo(hist); 
