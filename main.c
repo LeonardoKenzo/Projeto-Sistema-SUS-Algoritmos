@@ -5,6 +5,7 @@
 #include "paciente.h"
 #include "fila_de_atendimento.h"
 #include "relacao_de_pacientes.h"
+#include "IO.h"
 #define TAM_FILA 25
 
 PACIENTE *ler_paciente(RELACAO_DE_PACIENTE *relacao);
@@ -21,6 +22,11 @@ void printar_menu();
 int main(void){
     RELACAO_DE_PACIENTE *relacao = relacao_criar();
     FILA_DE_ATENDIMENTO *fila = fila_criar(TAM_FILA);
+
+    //CARREGAR RELAÇÃO E FILA DE EXECUÇÕES ANTERIORES
+    if (LOAD(&relacao, &fila)== false){
+        printf("Não foi possível acessar o arquivo binário para LOAD\n");
+    }
 
     int comando;
     do{
@@ -60,6 +66,11 @@ int main(void){
             break;
         }
     }while(comando != 8);
+
+    //SALVAR RELAÇÂO E FILA
+    if(SAVE(relacao, fila)==false){
+        printf("Não foi possível acessar o arquivo binário para o SAVE\n");
+    }
 
     //LIBERAR MEMORIA
     fila_free(&fila);
