@@ -49,11 +49,11 @@ int busca_binaria_insercao(RELACAO_DE_PACIENTE *relacao, int id){
 }
 
 RELACAO_DE_PACIENTE *relacao_criar(){
-    RELACAO_DE_PACIENTE *relacao = (RELACAO_DE_PACIENTE *)malloc(sizeof(RELACAO_DE_PACIENTE));
+    RELACAO_DE_PACIENTE *relacao = (RELACAO_DE_PACIENTE *)calloc(1, sizeof(RELACAO_DE_PACIENTE));
     if(relacao == NULL) {
         return NULL;
     }
-    relacao->pacientes = (PACIENTE **)malloc(CAPACIDADE_INICIAL * sizeof(PACIENTE*));
+    relacao->pacientes = (PACIENTE **)calloc(CAPACIDADE_INICIAL, sizeof(PACIENTE*));
     if(relacao->pacientes == NULL) {
         free(relacao);
         return NULL;
@@ -184,8 +184,7 @@ PACIENTE *relacao_remover_paciente_fim(RELACAO_DE_PACIENTE *relacao){
     if (relacao == NULL || relacao_esta_vazia(relacao)){
         return NULL;
     }
-
     relacao->quantidade -= 1;
     
-    return relacao->pacientes[relacao->quantidade];
+    return relacao->pacientes[relacao->quantidade];   
 }

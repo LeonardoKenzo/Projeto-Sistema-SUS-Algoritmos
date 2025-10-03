@@ -5,7 +5,7 @@
 
 struct paciente_{
     int id;
-    char *nome;
+    char nome[100];
     HISTORICO *historico;
     bool estaMorto;
     bool emAtendimento;
@@ -18,7 +18,7 @@ PACIENTE *paciente_criar(int id, char *nome){
 
         //Inicializa todas as informacoes do paciente
         paciente->id = id;
-        paciente->nome = strdup(nome);
+        strncpy(paciente->nome, nome, (strlen(nome) + 1));
         paciente->historico = historico_criar();
         paciente->estaMorto = false;
         paciente->emAtendimento = false;
@@ -39,7 +39,6 @@ void paciente_free(PACIENTE **paciente){
         return;
     }
     historico_free(&((*paciente)->historico));
-    free((*paciente)->nome);
     free(*paciente);
     *paciente = NULL;
 }

@@ -6,7 +6,7 @@
 #include "fila_de_atendimento.h"
 #include "relacao_de_pacientes.h"
 #include "IO.h"
-#define TAM_FILA 25
+#define TAM_FILA 26
 
 PACIENTE *ler_paciente(RELACAO_DE_PACIENTE *relacao);
 PACIENTE *buscar_paciente(RELACAO_DE_PACIENTE *relacao);
@@ -123,7 +123,6 @@ void registrar_paciente(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila,
     }
     if(!fila_inserir(fila, novoPaciente)){
         relacao_apagar_paciente(relacao, paciente_get_id(novoPaciente));
-        paciente_free(&novoPaciente);
         return;
     }
     printf("Paciente registrado e dentro da fila de espera!\nNome: %s\nId: %d\n\n", paciente_get_nome(novoPaciente), paciente_get_id(novoPaciente));
@@ -145,22 +144,34 @@ void adicionar_procedimento(RELACAO_DE_PACIENTE *relacao){
     char procedimento[100];
     printf("Escreva o procedimento abaixo:\n");
     scanf(" %[^\n]", procedimento);
-    historico_inserir_procedimento(paciente_get_historico(paciente), procedimento);
+    if(historico_inserir_procedimento(paciente_get_historico(paciente), procedimento)){
+        printf("Procedimento inserido!\n");
+    }    
     printf("\n");
 }
 
 void desfazer_procedimento(RELACAO_DE_PACIENTE *relacao){
     PACIENTE *paciente = buscar_paciente(relacao);
-    
+
     //Desfaz o procedimento
     printf("Paciente: %s\n", paciente_get_nome(paciente));
+    char * procedimento = historico_consultar_procedimento_topo(paciente_get_historico(paciente));
+    if(procedimento == NULL){
+        return;
+    }
     historico_remover_procedimento(paciente_get_historico(paciente));
+    
+    printf("\"%s\" foi removido do histórico médico.\n", procedimento);
     printf("\n");
 }
 
 void chamar_paciente_atendimento(FILA_DE_ATENDIMENTO *fila){
     //Retira o paciente da fila de atendimento
     PACIENTE *paciente = fila_remover(fila);
+    if(paciente == NULL){
+        printf("Não tem pacientes para serem atendidos.\n");
+        return;
+    }
     paciente_em_atendimento(paciente);
     printf("\n");
 }

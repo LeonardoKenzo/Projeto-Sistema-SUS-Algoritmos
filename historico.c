@@ -68,9 +68,8 @@ bool historico_inserir_procedimento(HISTORICO *historico, char *procedimento){
         historico->quantidadeCaracteres += strlen(procedimento);
 
         //Insere o procedimento
-        strcpy(historico->procedimentos[historico->tamanho], procedimento);
+        strncpy(historico->procedimentos[historico->tamanho], procedimento, strlen(procedimento) + 1);
         historico->tamanho++;
-        printf("Procedimento inserido!\n");
         return true;
     }
     //Se nao conseguir inserir
@@ -81,9 +80,6 @@ bool historico_inserir_procedimento(HISTORICO *historico, char *procedimento){
 //Remove o ultimo procedimento adicionado do historico
 bool historico_remover_procedimento(HISTORICO *historico){
     if(!historico_esta_vazio(historico)){
-        
-        //Mostra qual procedimento foi removido
-        printf("\"%s\" foi removido do histórico médico.\n", historico->procedimentos[historico->tamanho - 1]);
 
         //Remove o procedimento do historico
         historico->tamanho--;

@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define MAX_PROCEDIMENTOS 10
-#define MAX_TAMANHO_FILA 25
+#define MAX_TAMANHO_FILA 26
 
 bool SAVE(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila) {
     if (!relacao || !fila) {
@@ -89,21 +89,16 @@ bool SAVE(RELACAO_DE_PACIENTE *relacao, FILA_DE_ATENDIMENTO *fila) {
             fwrite(procedimentos[i], sizeof(char), tam_proc, fp_relacao);
             free(procedimentos[i]);
         }
-        
         paciente_free(&p);
         p = relacao_remover_paciente_fim(relacao);
     }
     fclose(fp_relacao);
 
-    // Libera a memória da relação e da fila
-    relacao_free(&relacao);
-    fila_free(&fila);
-
     return true;
 }
 
 bool LOAD(RELACAO_DE_PACIENTE **relacao, FILA_DE_ATENDIMENTO **fila) {
-    if (!*relacao || !*fila) {
+    if (!(*relacao) || !(*fila)) {
         return false;
     }
 

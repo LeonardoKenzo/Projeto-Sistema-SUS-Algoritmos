@@ -49,11 +49,14 @@ bool fila_cheia(FILA_DE_ATENDIMENTO *fila) {
 }
 
 bool fila_inserir(FILA_DE_ATENDIMENTO *fila, PACIENTE *paciente) {
-    if ((fila == NULL && !fila_cheia(fila)) || paciente == NULL) {
+    if ((fila == NULL || paciente == NULL)) {
         printf("Não foi possivel inserir o paciente na triagem.\n");
         return false;
     }
-
+    if(fila_cheia(fila)){
+        printf("A fila de atendimento está cheia.\n");
+        return false;
+    }
     fila->pacientes[fila->fim] = paciente;
     fila->fim = (fila->fim + 1) % fila->capacidade;
     fila->proximo = fila->pacientes[fila->fim];
@@ -63,7 +66,6 @@ bool fila_inserir(FILA_DE_ATENDIMENTO *fila, PACIENTE *paciente) {
 //Remove o primeiro paciente que entrou na fila
 PACIENTE *fila_remover(FILA_DE_ATENDIMENTO *fila) {
     if (fila != NULL && fila_vazia(fila)) {
-        printf("Não tem pacientes para serem atendidos.\n");
         return NULL;
     }
     
