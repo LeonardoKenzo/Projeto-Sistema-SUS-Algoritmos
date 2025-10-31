@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
+// A fila implementada é uma fila encadeada circular
 struct fila_de_atendimento_
 {
     PACIENTE **pacientes;
